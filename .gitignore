@@ -1,0 +1,20 @@
+.ignore/*
+
+# Created by https://www.gitignore.io/api/batch,powershell,visualstudiocode
+
+### PowerShell ###
+# Exclude packaged modules
+*.zip
+
+# Exclude .NET assemblies from source
+*.dll
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+# End of https://www.gitignore.io/api/batch,powershell,visualstudiocode
