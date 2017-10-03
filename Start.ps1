@@ -50,6 +50,9 @@ Expand-Archive -Path C:\BuildAgent\agent.zip -DestinationPath C:\BuildAgent
 Write-Host "Deleting agent.zip"
 Remove-Item -Path C:\BuildAgent\agent.zip
 
+# now setup our image to contain build dependencies
+& .\SetupBuildDeps.ps1
+
 $env:VSO_AGENT_IGNORE="VSTS_AGENT_URL,VSO_AGENT_IGNORE,VSTS_AGENT,VSTS_ACCOUNT,VSTS_TOKEN,VSTS_POOL,VSTS_WORK"
 if ($env:VSTS_AGENT_IGNORE -ne $null)
 {
