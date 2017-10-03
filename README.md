@@ -8,10 +8,10 @@ docker build github.com/wes566/docker-vsts-agent
 
 ## how to build locally
 ```
-docker build .
+docker build -t vsts-agent-windows .
 ```
 
 ## how to run
 ```
-docker run -e VSTS_ACCOUNT=<acct name> -e VSTS_TOKEN=<token> -e VSTS_AGENT=<computer name> -it vsts_agent
+docker run -e VSTS_ACCOUNT=<acct name> -e VSTS_TOKEN=<token> -e VSTS_AGENT=<agent name> -it vsts_agent
 ```

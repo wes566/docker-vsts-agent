@@ -4,3 +4,5 @@ Set-ExecutionPolicy Bypass; iex ((New-Object System.Net.WebClient).DownloadStrin
 "Installing dotnet core sdk"
 choco install dotnetcore-sdk -y
 
+"Installing node and npm"
+choco install nodejs.install -y
