@@ -1,0 +1,9 @@
+FROM windowsservercore
+ENV vso_username=”user”
+ENV vso_password=”password”
+ENV vso_url=”https://{your vsts address}.visualstudio.com”
+ENV vso_agentname=$COMPUTERNAME
+ENV vso_agentpool=default
+
+COPY . /agent
+WORKDIR /agent
