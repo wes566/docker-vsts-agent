@@ -11,7 +11,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 # node/npm
 # add some system variables
 # make sure environment variables are fresh
-# install .NET Framework so msdeploy.exe works
+# install npm5.0.3 which does not have the EPERM bug https://github.com/npm/npm/issues/17671#issuecomment-314406503
 RUN New-Item -ItemType File -Force $profile -Value '#creating an empty profile so chocolatey refreshenv will work'; \
     Set-ExecutionPolicy Bypass; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); \
     . $profile; \
@@ -20,7 +20,9 @@ RUN New-Item -ItemType File -Force $profile -Value '#creating an empty profile s
     choco install nodejs.install -y; \
     [Environment]::SetEnvironmentVariable('npm', 'C:\Program Files\nodejs\npm.cmd', 'Machine'); \
     [Environment]::SetEnvironmentVariable('dotnet', 'C:\Program Files\dotnet\dotnet.exe', 'Machine'); \
-    refreshenv;
+    [Environment]::SetEnvironmentVariable('DOTNET_SKIP_FIRST_TIME_EXPERIENCE', '1', 'Machine'); \
+    refreshenv; \
+    npm i -g npm@5.0.3;
 
 # copy over agent start scripts
 RUN mkdir C:\BuildAgent
