@@ -1,1 +1,2 @@
-PowerShell.exe -ExecutionPolicy ByPass .\Start.ps1
+REM Unfortunately this will be running blind... can't use -NoNewWindow with running as admin
+PowerShell -Command "Start-Process PowerShell -Wait -Verb RunAs -ArgumentList \"-ExecutionPolicy ByPass \BuildAgent\Start.ps1\""

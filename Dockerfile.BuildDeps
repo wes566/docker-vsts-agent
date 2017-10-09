@@ -1,0 +1,29 @@
+FROM microsoft/windowsservercore:10.0.14393.1358
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+# create powershell profile
+RUN New-Item -ItemType File -Force $profile -Value '#creating an empty profile so chocolatey refreshenv will work';
+
+# install chocolatey
+RUN Set-ExecutionPolicy Bypass; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+
+# refresh profile so chocolatey stuff is included
+RUN . $profile;
+
+# install both sdk 2.0 and 1.0.4
+RUN choco install dotnetcore-sdk -y;
+RUN choco install dotnetcore-sdk --version 1.1.2 --force -y;
+
+# node/npm
+RUN choco install nodejs.install -y;
+
+# install git
+RUN choco install git.install -y;
+
+# add some system variables
+RUN [Environment]::SetEnvironmentVariable("npm", "C:\Program Files\nodejs\npm.cmd", "Machine")
+RUN [Environment]::SetEnvironmentVariable("dotnet", "C:\Program Files\dotnet\dotnet.exe", "Machine")
+
+# make sure environment variables are fresh
+RUN refreshenv;

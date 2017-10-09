@@ -1,5 +1,16 @@
 $ErrorActionPreference = "Stop"
 
+# record system memory to env variable
+$memGb = [Math]::Round(((Get-WmiObject -Class Win32_ComputerSystem).TotalPhysicalMemory / 1GB), 2);
+"Container Memory is:$memGb GBs";
+[Environment]::SetEnvironmentVariable('memoryGB', $memGb, 'Machine');
+
+# record if we are running vsts-agent as admin
+$isRunningAdmin = [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
+"Is running as admin:$isRunningAdmin";
+[Environment]::SetEnvironmentVariable('VSTS_AGENT_AS_ADMIN', $isRunningAdmin, 'Machine');
+refreshenv;
+
 If ($env:VSTS_ACCOUNT -eq $null) {
     Write-Error "Missing VSTS_ACCOUNT environment variable"
     exit 1
@@ -50,9 +61,6 @@ Expand-Archive -Path C:\BuildAgent\agent.zip -DestinationPath C:\BuildAgent
 Write-Host "Deleting agent.zip"
 Remove-Item -Path C:\BuildAgent\agent.zip
 
-# now setup our image to contain build dependencies
-& .\SetupBuildDeps.ps1
-
 $env:VSO_AGENT_IGNORE="VSTS_AGENT_URL,VSO_AGENT_IGNORE,VSTS_AGENT,VSTS_ACCOUNT,VSTS_TOKEN,VSTS_POOL,VSTS_WORK"
 if ($env:VSTS_AGENT_IGNORE -ne $null)
 {
@@ -70,4 +78,6 @@ Set-Location -Path "C:\BuildAgent"
     --work "$env:VSTS_WORK" `
     --replace
 
-& .\bin\Agent.Listener.exe run
+if ($env:SKIP_START_AGENT -eq $null) {
+    & .\bin\Agent.Listener.exe run
+}
