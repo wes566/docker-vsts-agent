@@ -17,7 +17,7 @@ RUN New-Item -ItemType File -Force $profile -Value '#creating an empty profile s
     . $profile; \
     choco install dotnetcore-sdk -y; \
     choco install dotnetcore-sdk --version 1.1.2 --force -y; \
-    choco install nodejs.install -y; \
+    choco install nodejs.install --version 8.11.3 -y; \
     [Environment]::SetEnvironmentVariable('npm', 'C:\Program Files\nodejs\npm.cmd', 'Machine'); \
     [Environment]::SetEnvironmentVariable('dotnet', 'C:\Program Files\dotnet\dotnet.exe', 'Machine'); \
     [Environment]::SetEnvironmentVariable('DOTNET_SKIP_FIRST_TIME_EXPERIENCE', '1', 'Machine'); \
