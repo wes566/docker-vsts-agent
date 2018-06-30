@@ -1,4 +1,4 @@
-# docker-vsts-agent-windows
+# vsts-agent-windows
 
 Docker image for a Windows VSTS build agent. Based on https://github.com/Microsoft/vsts-agent-docker (with some different build tools in the image).
 
