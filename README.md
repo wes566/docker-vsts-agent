@@ -31,3 +31,11 @@ Set the `SKIP_START_AGENT` environment variable to anything and then the vsts-ag
 ```
 docker run -e SKIP_START_AGENT=foo -e VSTS_ACCOUNT=<acct name> -e VSTS_TOKEN=<token> -e VSTS_AGENT=<agent name> -it docker-vsts-agent-windows
 ```
+
+### how to push an updated image
+
+Docker hub [automated builds don't support Windows yet](https://forums.docker.com/t/automated-windows-builds/24192) so after making any changes to the image you have to push to docker hub.
+
+```
+docker push wes566/vsts-agent-windows
+```
